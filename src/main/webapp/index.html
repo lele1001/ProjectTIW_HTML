@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+
+<title>Login page</title>
+<link rel="stylesheet" type="text/css" media="all" href="./myStyle.css"
+	th:href="@{/myStyle.css}" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body>
+	<h1>Welcome in OnlineAuctions website!</h1>
+
+	<p style="text-align: center;">Insert your username and your password
+		to login</p>
+
+	<form class="createForm" action="Login" method="POST">
+		<fieldset>
+			<ul>
+				<li>Username:<label> <input type="text" name="username"
+						required>
+				</label></li>
+				<li>Password:<label> <input type="password"
+						name="password" required>
+				</label>
+				</li>
+			</ul>
+			<button type="submit">Login</button>
+		</fieldset>
+
+	</form>
+</body>
+
+</html>

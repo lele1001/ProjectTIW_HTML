@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+
+<title>Buy</title>
+<link rel="stylesheet" type="text/css" media="all" href="./myStyle.css"
+	th:href="@{/myStyle.css}" />
+</head>
+
+<body>
+	<div class="column left">
+		<ul>
+			<li><a th:href="home.html">Homepage</a></li>
+			<li><a th:href="@{/GoToSellPage}">Sell</a></li>
+			<li><a th:href="@{/Logout}">Logout</a></li>
+		</ul>
+	</div>
+
+	<section class="column right">
+		<h2 class="special">Auctions you won:</h2>
+		<div th:unless="${wonAuctions} == null or ${wonAuctions.isEmpty()}">
+			<table class="tableArrangement">
+				<thead>
+					<tr>
+						<th>AuctionID</th>
+						<th>Title</th>
+						<th>Price</th>
+						<th>Link</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="d : ${wonAuctions}">
+						<td th:text="${d.auctionID}"></td>
+						<td th:text="${d.title}"></td>
+						<td><span
+							th:text="${#numbers.formatDecimal(d.actualPrice, 0, 'COMMA', 2, 'POINT')}"></span></td>
+						<td><a
+							th:href="@{/ClosedAuctionDetails(auctionID=${d.auctionID})}">Auction
+								Details</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p class="special"
+			th:if="${wonAuctions} == null or ${wonAuctions.isEmpty()}">You
+			did not win any auction in the past.</p>
+
+		<div>
+			<h2 class="special">Search for an Auction:</h2>
+			<form class="createForm" action="#" id="searchForm">
+				<fieldset>
+					<p>
+						Insert a keyword: <label> <input type="search" name="key"
+							required maxlength="20" />
+						</label>
+					</p>
+					<button type="submit">Search</button>
+				</fieldset>
+			</form>
+			<p th:if="(${auctionsByKeyword} == null or ${auctionsByKeyword.isEmpty()}) and not key == null"
+				th:text="${noAuctionsMsg}"></p>
+		</div>
+
+		<div th:unless="${auctionsByKeyword} == null or ${auctionsByKeyword.isEmpty()}">
+			<h2 class="special">
+				Open auctions that contains <span th:text="${key}"></span>:
+			</h2>
+			<table class="tableArrangement">
+				<thead>
+					<tr>
+						<th>AuctionID</th>
+						<th>OwnerID</th>
+						<th>Title</th>
+						<th>Link</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="d : ${auctionsByKeyword}">
+						<td th:text="${d.auctionID}"></td>
+						<td th:text="${d.ownerID}"></td>
+						<td th:text="${d.title}"></td>
+						<td><a th:href="@{/GoToOfferPage(auctionID=${d.auctionID})}">Offers
+								List</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</section>
+</body>
+</html>
