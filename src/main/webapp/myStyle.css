@@ -1,137 +1,137 @@
 @charset "ISO-8859-1";
 
 section {
-	background: url("./images/auctions.jpg");
-	background-position: center;
-	background-size: cover;
-	transition: all .5s;
-	width: 85%;
+    background: url("./images/auctions.jpg");
+    background-position: center;
+    background-size: cover;
+    transition: all .5s;
+    width: 85%;
 }
 
 h1 {
-	display: block;
-	text-align: center;
-	font-size: 55px;
-	/*margin top, right, bottom, left*/
-	margin: 0.67em 0em 0.67em 0em;
-	font-weight: bold;
+    display: block;
+    text-align: center;
+    font-size: 55px;
+    /*margin top, right, bottom, left*/
+    margin: 0.67em 0em 0.67em 0em;
+    font-weight: bold;
 }
 
 .special {
-	color: white;
+    color: white;
 }
 
 h2 {
-	display: block;
-	text-align: justify;
-	font-size: 40px;
-	/*margin top, right, bottom, left*/
-	margin: 0.67em 0em 0.67em 0em;
+    display: block;
+    text-align: justify;
+    font-size: 40px;
+    /*margin top, right, bottom, left*/
+    margin: 0.67em 0em 0.67em 0em;
 }
 
 p {
-	display: block;
-	font-size: 25px;
-	/*margin top, right, bottom, left*/
-	margin: 0.67em 0em 0.67em 0em;
+    display: block;
+    font-size: 25px;
+    /*margin top, right, bottom, left*/
+    margin: 0.67em 0em 0.67em 0em;
 }
 
 .createForm {
-	margin: 0 auto;
-	width: 75%;
-	background-color: #ffffff;
-	border-radius: 5px;
-	padding: 1em;
-	text-align: center;
-	font-size: 25px;
+    margin: 0 auto;
+    width: 75%;
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 1em;
+    text-align: center;
+    font-size: 25px;
 }
 
-.createForm li+li {
-	margin-top: 1em;
+.createForm li + li {
+    margin-top: 1em;
 }
 
 ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .column {
-  float: left;
-  padding: 10px;
+    float: left;
+    padding: 10px;
 }
 
 .left {
-	width: 15%;
-	z-index: 1;
-	background-color: #c0c0c0;
-	border: 1px solid #000000;
-	border-radius: 5px;
-	font-size: 25px;
-	text-align: center;
+    width: 15%;
+    z-index: 1;
+    background-color: #c0c0c0;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 25px;
+    text-align: center;
 }
 
 .right {
-  width: 75%;
+    width: 75%;
 }
 
 input, textarea {
-	width: 300px;
-	font: 20px;
-	border: 1px solid #000000;
+    width: 300px;
+    font: 20px;
+    border: 1px solid #000000;
 }
 
 textarea {
-	height: 5em;
+    height: 5em;
 }
 
 a:hover {
-	background: #0080ff;
-	color: white;
+    background: #0080ff;
+    color: white;
 }
 
 a {
-	font-size: 25px;
-	color: black;
+    font-size: 25px;
+    color: black;
 }
 
 input:invalid {
-	border-color: #B3B3B3;
-	border-radius: 5px;
+    border-color: #B3B3B3;
+    border-radius: 5px;
 }
 
 .buttonForm {
-	margin: 0 auto;
-	text-align: center;
-	font-size: 25px;
-	width: 50%;
-	border-radius: 5px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 25px;
+    width: 50%;
+    border-radius: 5px;
 }
 
 button {
-	font-size: 20px;
+    font-size: 20px;
 }
 
 .tableArrangement {
-	width: 100%;
-	background-color: #ffffff;
-	font-size: 25px;
-	border: 1px solid #000000;
-	border-collapse: collapse;
-	text-align: center;
-	padding: 5px;
-	margin-left: auto;
-	margin-right: auto;
+    width: 100%;
+    background-color: #ffffff;
+    font-size: 25px;
+    border: 1px solid #000000;
+    border-collapse: collapse;
+    text-align: center;
+    padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .tableArrangement tr:nth-child(even) td {
-	background-color: #ececec;
+    background-color: #ececec;
 }
 
 .tableArrangement th {
-	background-color: #c0c0c0;
+    background-color: #c0c0c0;
 }
 
 .alertmessage {
-	color: #ff0000;;
+    color: #ff0000;;
 }

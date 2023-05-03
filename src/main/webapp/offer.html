@@ -2,130 +2,131 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+    <meta charset="ISO-8859-1">
 
-<title>Offer</title>
-<link rel="stylesheet" type="text/css" media="all" href="./myStyle.css"
-	th:href="@{/myStyle.css}" />
+    <title>Offer</title>
+    <link rel="stylesheet" type="text/css" media="all" href="./myStyle.css"
+          th:href="@{/myStyle.css}"/>
 </head>
 
 <body>
-	<div class="column left">
-		<ul>
-			<li><a th:href="home.html">Homepage</a></li>
-			<li><a th:href="@{/GoToSellPage}">Sell</a></li>
-			<li><a th:href="@{/GoToBuyPage}">Buy</a></li>
-			<li><a th:href="@{/Logout}">Logout</a></li>
+<div class="column left">
+    <ul>
+        <li><a th:href="home.html">Homepage</a></li>
+        <li><a th:href="@{/GoToSellPage}">Sell</a></li>
+        <li><a th:href="@{/GoToBuyPage}">Buy</a></li>
+        <li><a th:href="@{/Logout}">Logout</a></li>
 
-		</ul>
-	</div>
+    </ul>
+</div>
 
-	<section class="column right">
-		<div class="special">
-			<h1>Welcome to the Offer Page!</h1>
-			<p>Here you can see the articles in the selected auction and, if
-				it is still open, make an auction.</p>
-			<p>Remember that the amount you offer should be greater than the
-				actual price plus the minimum increase.</p>
-		</div>
+<section class="column right">
+    <div class="special">
+        <h1>Welcome to the Offer Page!</h1>
+        <p>Here you can see the articles in the selected auction and, if
+            it is still open, make an auction.</p>
+        <p>Remember that the amount you offer should be greater than the
+            actual price plus the minimum increase.</p>
+    </div>
 
-		<div>
-			<h2 class="special">Auction details:</h2>
-			<table class="tableArrangement">
-				<thead>
-					<tr>
-						<th>AuctionID</th>
-						<th>Title</th>
-						<th>Sarting Price</th>
-						<th>Minimum Increase</th>
-						<th>Expiry Date</th>
-						<th>Actual Price</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="d : ${openAuction}">
-						<td th:text="${d.auctionID}"></td>
-						<td th:text="${d.title}"></td>
-						<td><span
-							th:text="${#numbers.formatDecimal(d.startingPrice, 0, 'COMMA', 2, 'POINT')}"></span></td>
-						<td><span
-							th:text="${#numbers.formatDecimal(d.minIncrease, 0, 'COMMA', 2, 'POINT')}"></span></td>
-						<td th:text="${expiryDate}"></td>
-						<td><span
-							th:text="${#numbers.formatDecimal(d.actualPrice, 0, 'COMMA', 2, 'POINT')}"></span></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+    <div>
+        <h2 class="special">Auction details:</h2>
+        <table class="tableArrangement">
+            <thead>
+            <tr>
+                <th>AuctionID</th>
+                <th>Title</th>
+                <th>Sarting Price</th>
+                <th>Minimum Increase</th>
+                <th>Expiry Date</th>
+                <th>Actual Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="d : ${openAuction}">
+                <td th:text="${d.auctionID}"></td>
+                <td th:text="${d.title}"></td>
+                <td><span
+                        th:text="${#numbers.formatDecimal(d.startingPrice, 0, 'COMMA', 2, 'POINT')}"></span></td>
+                <td><span
+                        th:text="${#numbers.formatDecimal(d.minIncrease, 0, 'COMMA', 2, 'POINT')}"></span></td>
+                <td th:text="${expiryDate}"></td>
+                <td><span
+                        th:text="${#numbers.formatDecimal(d.actualPrice, 0, 'COMMA', 2, 'POINT')}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-		<div>
-			<h2 class="special">Articles in this Auction:</h2>
-			<div>
-				<table class="tableArrangement">
-					<thead>
-						<tr>
-							<th>ArticleID</th>
-							<th>Name</th>
-							<th>Description</th>
-							<th>Image</th>
-							<th>Price</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="d : ${articlesList}">
-							<td th:text="${d.articleID}"></td>
-							<td th:text="${d.name}"></td>
-							<td><span th:text="${d.description}"></span></td>
-							<td><img th:src="${d.image}" width="100" height="100" /></td>
-							<td><span
-								th:text="${#numbers.formatDecimal(d.price, 0, 'COMMA', 2, 'POINT')}"></span></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+    <div>
+        <h2 class="special">Articles in this Auction:</h2>
+        <div>
+            <table class="tableArrangement">
+                <thead>
+                <tr>
+                    <th>ArticleID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="d : ${articlesList}">
+                    <td th:text="${d.articleID}"></td>
+                    <td th:text="${d.name}"></td>
+                    <td><span th:text="${d.description}"></span></td>
+                    <td><img th:src="${d.image}" width="100" height="100"/></td>
+                    <td><span
+                            th:text="${#numbers.formatDecimal(d.price, 0, 'COMMA', 2, 'POINT')}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
-			<h2 class="special">Offers for this auction:</h2>
-			<div th:unless="${offersList} == null or ${offersList.isEmpty()}">
-				<table class="tableArrangement">
-					<thead>
-						<tr>
-							<th>UserID</th>
-							<th>Price</th>
-							<th>Date</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="o : ${offersList}">
-							<td th:text="${o.key.userID}"></td>
-							<td><span
-								th:text="${#numbers.formatDecimal(o.key.price, 0, 'COMMA', 2, 'POINT')}"></span></td>
-							<td th:text="${o.value}"></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<p class="special"
-			th:if="${offersList} == null or ${offersList.isEmpty()}">There
-			are no offers for this auction</p>
+        <h2 class="special">Offers for this auction:</h2>
+        <div th:unless="${offersList} == null or ${offersList.isEmpty()}">
+            <table class="tableArrangement">
+                <thead>
+                <tr>
+                    <th>UserID</th>
+                    <th>Price</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="o : ${offersList}">
+                    <td th:text="${o.key.userID}"></td>
+                    <td><span
+                            th:text="${#numbers.formatDecimal(o.key.price, 0, 'COMMA', 2, 'POINT')}"></span></td>
+                    <td th:text="${o.value}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <p class="special"
+       th:if="${offersList} == null or ${offersList.isEmpty()}">There
+        are no offers for this auction</p>
 
-		<br>
+    <br>
 
-		<div th:unless="${isExpired}">
-			<form th:action="@{/MakeAnOffer}" method="POST">
-				<input type="hidden" name="auctionID"
-					th:value="${openAuction.auctionID}">
-				<fieldset>
-					<p>
-						Make an Offer: <label> <input type="number" name="price"
-							min="0" step="0.01" required />
-						</label>
-					</p>
-					<button type="submit" name="action" value="SubmitOffer">Submit
-						Offer</button>
-				</fieldset>
-			</form>
-		</div>
-	</section>
+    <div th:unless="${isExpired}">
+        <form th:action="@{/MakeAnOffer}" method="POST">
+            <input type="hidden" name="auctionID"
+                   th:value="${openAuction.auctionID}">
+            <fieldset>
+                <p>
+                    Make an Offer: <label> <input type="number" name="price"
+                                                  min="0" step="0.01" required/>
+                </label>
+                </p>
+                <button type="submit" name="action" value="SubmitOffer">Submit
+                    Offer
+                </button>
+            </fieldset>
+        </form>
+    </div>
+</section>
 </body>
 </html>

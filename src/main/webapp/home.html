@@ -2,22 +2,22 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+    <meta charset="ISO-8859-1">
 
-<title>Home</title>
-<link rel="stylesheet" type="text/css" media="all" href="./myStyle.css"
-	th:href="@{/myStyle.css}" />
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" media="all" href="./myStyle.css"
+          th:href="@{/myStyle.css}"/>
 </head>
 
 <body>
-	<h1>Home Page</h1>
-	<div style="text-align: center;">
-		<p>Nice to see you again!</p>
-		<br>
-		<p>Select what you want to do:</p>
-		<br> <a href="GoToSellPage" th:href="@{/GoToSellPage}">Sell</a><br>
-		<a href="GoToBuyPage" th:href="@{/GoToBuyPage}">Buy</a><br> <a
-			href="Logout" th:href="@{/Logout}">Logout</a>
-	</div>
+<h1>Home Page</h1>
+<div style="text-align: center;">
+    <p>Nice to see you again!</p>
+    <br>
+    <p>Select what you want to do:</p>
+    <br> <a href="GoToSellPage" th:href="@{/GoToSellPage}">Sell</a><br>
+    <a href="GoToBuyPage" th:href="@{/GoToBuyPage}">Buy</a><br> <a
+        href="Logout" th:href="@{/Logout}">Logout</a>
+</div>
 </body>
 </html>

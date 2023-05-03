@@ -3,74 +3,74 @@ package beans;
 import java.time.LocalDateTime;
 
 public class Auction {
-	private final int auctionID;
-	private final int ownerID;
-	private final String title;
-	private final float startingPrice;
-	private final float minIncrease;
-	private final LocalDateTime expiryDate; // format: yyyy-MM-dd hh:mm:ss
-	private int winnerID;
-	private float actualPrice;
-	private int isClosed;
+    private final int auctionID;
+    private final int ownerID;
+    private final String title;
+    private final float startingPrice;
+    private final float minIncrease;
+    private final LocalDateTime expiryDate; // format: yyyy-MM-dd hh:mm:ss
+    private int winnerID;
+    private float actualPrice;
+    private int isClosed;
 
-	public Auction(int auctionID, int ownerID, String title, float startingPrice, float minIncrease,
-			LocalDateTime expiryDate, float actualPrice, int isClosed) {
-		this.auctionID = auctionID;
-		this.ownerID = ownerID;
-		this.title = title;
-		this.startingPrice = startingPrice;
-		this.minIncrease = minIncrease;
-		this.expiryDate = expiryDate;
-		this.actualPrice = actualPrice;
-		this.winnerID = 0;
-		this.isClosed = isClosed;
-	}
+    public Auction(int auctionID, int ownerID, String title, float startingPrice, float minIncrease,
+                   LocalDateTime expiryDate, float actualPrice, int isClosed) {
+        this.auctionID = auctionID;
+        this.ownerID = ownerID;
+        this.title = title;
+        this.startingPrice = startingPrice;
+        this.minIncrease = minIncrease;
+        this.expiryDate = expiryDate;
+        this.actualPrice = actualPrice;
+        this.winnerID = 0;
+        this.isClosed = isClosed;
+    }
 
-	public void setWinnerID(int winnerID) {
-		this.winnerID = winnerID;
-	}
+    public void setWinnerID(int winnerID) {
+        this.winnerID = winnerID;
+    }
 
-	public void setActualPrice(float actualPrice) {
-		this.actualPrice = actualPrice;
-	}
-	
-	public int isClosed() {
-		return isClosed;
-	}
+    public void setActualPrice(float actualPrice) {
+        this.actualPrice = actualPrice;
+    }
 
-	public void setClosed(int isClosed) {
-		this.isClosed = isClosed;
-	}
+    public int isClosed() {
+        return isClosed;
+    }
 
-	public int getAuctionID() {
-		return auctionID;
-	}
+    public void setClosed(int isClosed) {
+        this.isClosed = isClosed;
+    }
 
-	public int getOwnerID() {
-		return ownerID;
-	}
+    public int getAuctionID() {
+        return auctionID;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public int getOwnerID() {
+        return ownerID;
+    }
 
-	public float getStartingPrice() {
-		return startingPrice;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public float getMinIncrease() {
-		return minIncrease;
-	}
+    public float getStartingPrice() {
+        return startingPrice;
+    }
 
-	public LocalDateTime getExpiryDate() {
-		return expiryDate;
-	}
+    public float getMinIncrease() {
+        return minIncrease;
+    }
 
-	public int getWinnerID() {
-		return winnerID;
-	}
+    public LocalDateTime getExpiryDate() {
+        return expiryDate;
+    }
 
-	public float getActualPrice() {
-		return actualPrice;
-	}
+    public int getWinnerID() {
+        return winnerID;
+    }
+
+    public float getActualPrice() {
+        return actualPrice;
+    }
 }

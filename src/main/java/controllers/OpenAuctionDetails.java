@@ -32,162 +32,162 @@ import utilities.ConnectionHandler;
 
 @WebServlet("/OpenAuctionDetails")
 public class OpenAuctionDetails extends HttpServlet {
-	@Serial
-	private static final long serialVersionUID = 1L;
-	private Connection connection = null;
-	private TemplateEngine templateEngine;
+    @Serial
+    private static final long serialVersionUID = 1L;
+    private Connection connection = null;
+    private TemplateEngine templateEngine;
 
-	public OpenAuctionDetails() {
-		super();
-	}
+    public OpenAuctionDetails() {
+        super();
+    }
 
-	/**
-	 * Initializes the configuration of the servlet, of the thymeleaf engine and
-	 * connects to the database
-	 */
-	public void init() throws ServletException {
-		ServletContext context = getServletContext();
-		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(context);
+    /**
+     * Initializes the configuration of the servlet, of the thymeleaf engine and
+     * connects to the database
+     */
+    public void init() throws ServletException {
+        ServletContext context = getServletContext();
+        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(context);
 
-		templateResolver.setTemplateMode(TemplateMode.HTML);
+        templateResolver.setTemplateMode(TemplateMode.HTML);
 
-		this.templateEngine = new TemplateEngine();
-		this.templateEngine.setTemplateResolver(templateResolver);
+        this.templateEngine = new TemplateEngine();
+        this.templateEngine.setTemplateResolver(templateResolver);
 
-		templateResolver.setCharacterEncoding("ISO-8859-1");
-		templateResolver.setSuffix(".html");
+        templateResolver.setCharacterEncoding("ISO-8859-1");
+        templateResolver.setSuffix(".html");
 
-		connection = ConnectionHandler.getConnection(context);
-	}
+        connection = ConnectionHandler.getConnection(context);
+    }
 
-	/**
-	 * Checks if the connection is active
-	 */
-	private boolean checkConnection(Connection connection) {
-		try {
-			if (connection != null && !connection.isClosed())
-				return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+    /**
+     * Checks if the connection is active
+     */
+    private boolean checkConnection(Connection connection) {
+        try {
+            if (connection != null && !connection.isClosed())
+                return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	private void setupPage(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		int auctionID = Integer.parseInt(request.getParameter("auctionID"));
+    private void setupPage(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int auctionID = Integer.parseInt(request.getParameter("auctionID"));
 
-		Auction auction;
-		List<Offer> offers;
-		List<Article> articlesList;
-		boolean isExpired;
+        Auction auction;
+        List<Offer> offers;
+        List<Article> articlesList;
+        boolean isExpired;
 
-		// used to print the date on the screen in the easiest way
-		String formatDate;
-		// contains all the offers with their creationTimes formatted as strings
-		LinkedHashMap<Offer, String> formatOffers = null;
+        // used to print the date on the screen in the easiest way
+        String formatDate;
+        // contains all the offers with their creationTimes formatted as strings
+        LinkedHashMap<Offer, String> formatOffers = null;
 
-		// checks if the connection is active
-		if (checkConnection(connection)) {
-			AuctionDAO auc = new AuctionDAO(connection);
+        // checks if the connection is active
+        if (checkConnection(connection)) {
+            AuctionDAO auc = new AuctionDAO(connection);
 
-			try {
-				// retrieves the auction
-				auction = auc.getOpenAuctionByID(auctionID);
-			} catch (SQLException e) {
-				e.printStackTrace();
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-						"Errore: accesso al database fallito!");
-				return;
-			}
+            try {
+                // retrieves the auction
+                auction = auc.getOpenAuctionByID(auctionID);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                        "Errore: accesso al database fallito!");
+                return;
+            }
 
-			if (auction != null) {
-				OfferDAO off = new OfferDAO(connection);
+            if (auction != null) {
+                OfferDAO off = new OfferDAO(connection);
 
-				try {
-					// retrieves the offers related to the auction
-					offers = off.getOffersByAuctionID(auctionID);
-					
-					// reformat the offerDate to a string if there is at least one offer
-					if (offers != null) {
-						formatOffers = new LinkedHashMap<>();
+                try {
+                    // retrieves the offers related to the auction
+                    offers = off.getOffersByAuctionID(auctionID);
 
-						for (Offer o : offers) {
-							String formatOfferDate = o.getDate().format(DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm"));
-							formatOffers.put(o, formatOfferDate);
-						}
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-							"Errore: accesso al database fallito!");
-					return;
-				}
+                    // reformat the offerDate to a string if there is at least one offer
+                    if (offers != null) {
+                        formatOffers = new LinkedHashMap<>();
 
-				ArticleDAO art = new ArticleDAO(connection);
+                        for (Offer o : offers) {
+                            String formatOfferDate = o.getDate().format(DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm"));
+                            formatOffers.put(o, formatOfferDate);
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                            "Errore: accesso al database fallito!");
+                    return;
+                }
 
-				try {
-					// retrieves the articles in the auction
-					articlesList = art.getArticlesByAuctionID(auctionID);
-				} catch (SQLException e) {
-					e.printStackTrace();
-					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-							"Errore: accesso al database fallito!");
-					return;
-				}
+                ArticleDAO art = new ArticleDAO(connection);
 
-				// checks if the auction is expired
-				LocalDateTime curr = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
-				isExpired = curr.isAfter(auction.getExpiryDate());
+                try {
+                    // retrieves the articles in the auction
+                    articlesList = art.getArticlesByAuctionID(auctionID);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                            "Errore: accesso al database fallito!");
+                    return;
+                }
 
-				// reformat the expiryDate and makes it more readable
-				formatDate = auction.getExpiryDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
-			} else {
-				response.sendError(HttpServletResponse.SC_NOT_FOUND, "Errore: nessuna asta trovata!");
-				return;
-			}
+                // checks if the auction is expired
+                LocalDateTime curr = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
+                isExpired = curr.isAfter(auction.getExpiryDate());
 
-			// redirects to openAuctionDetails.html and add missions to the parameters
-			String path = "/openAuctionDetails.html";
+                // reformat the expiryDate and makes it more readable
+                formatDate = auction.getExpiryDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+            } else {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Errore: nessuna asta trovata!");
+                return;
+            }
 
-			ServletContext servletContext = getServletContext();
-			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+            // redirects to openAuctionDetails.html and add missions to the parameters
+            String path = "/openAuctionDetails.html";
 
-			// creates and sets the variables to use inside the template page
-			ctx.setVariable("openAuction", auction);
-			ctx.setVariable("expiryDate", formatDate);
-			ctx.setVariable("articlesList", articlesList);
-			ctx.setVariable("offersList", formatOffers);
-			ctx.setVariable("isExpired", isExpired);
+            ServletContext servletContext = getServletContext();
+            final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
-			templateEngine.process(path, ctx, response.getWriter());
-		}
-	}
+            // creates and sets the variables to use inside the template page
+            ctx.setVariable("openAuction", auction);
+            ctx.setVariable("expiryDate", formatDate);
+            ctx.setVariable("articlesList", articlesList);
+            ctx.setVariable("offersList", formatOffers);
+            ctx.setVariable("isExpired", isExpired);
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// checks if the session does not exist or is expired
-		if (request.getSession(false) == null || request.getSession(false).getAttribute("user") == null) {
-			response.sendRedirect(getServletContext().getContextPath() + "/index.html");
-		} else if (Integer.parseInt(request.getParameter("auctionID")) > 0) {
-			setupPage(request, response);
-		}
-	}
+            templateEngine.process(path, ctx, response.getWriter());
+        }
+    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doPost(request, response);
-	}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // checks if the session does not exist or is expired
+        if (request.getSession(false) == null || request.getSession(false).getAttribute("user") == null) {
+            response.sendRedirect(getServletContext().getContextPath() + "/index.html");
+        } else if (Integer.parseInt(request.getParameter("auctionID")) > 0) {
+            setupPage(request, response);
+        }
+    }
 
-	/**
-	 * Called when the servlet is destroyed
-	 */
-	public void destroy() {
-		try {
-			ConnectionHandler.closeConnection(connection);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doPost(request, response);
+    }
+
+    /**
+     * Called when the servlet is destroyed
+     */
+    public void destroy() {
+        try {
+            ConnectionHandler.closeConnection(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

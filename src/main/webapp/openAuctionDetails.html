@@ -2,115 +2,116 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+    <meta charset="ISO-8859-1">
 
-<title>Dettaglio Asta</title>
-<link rel="stylesheet" type="text/css" media="all" href="./myStyle.css"
-	th:href="@{/myStyle.css}" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <title>Dettaglio Asta</title>
+    <link rel="stylesheet" type="text/css" media="all" href="./myStyle.css"
+          th:href="@{/myStyle.css}"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 </head>
 
 <body>
-	<div class="column left">
-		<ul>
-			<li><a th:href="home.html">Homepage</a></li>
-			<li><a th:href="@{/GoToSellPage}">Sell</a></li>
-			<li><a th:href="@{/GoToBuyPage}">Buy</a></li>
-			<li><a th:href="Logout">Logout</a></li>
-		</ul>
+<div class="column left">
+    <ul>
+        <li><a th:href="home.html">Homepage</a></li>
+        <li><a th:href="@{/GoToSellPage}">Sell</a></li>
+        <li><a th:href="@{/GoToBuyPage}">Buy</a></li>
+        <li><a th:href="Logout">Logout</a></li>
+    </ul>
 
-		<br>
+    <br>
 
-		<div th:each="a : ${openAuction}" th:if="${isExpired}">
-			<form class="buttonForm" th:action="@{/CloseOpenAuction}"
-				method="POST">
-				<input type="hidden" name="auctionID"
-					th:value="${openAuction.auctionID}">
-				<button type="submit" name="closeAuction">Close
-					Auction</button>
-			</form>
-		</div>
-	</div>
+    <div th:each="a : ${openAuction}" th:if="${isExpired}">
+        <form class="buttonForm" th:action="@{/CloseOpenAuction}"
+              method="POST">
+            <input type="hidden" name="auctionID"
+                   th:value="${openAuction.auctionID}">
+            <button type="submit" name="closeAuction">Close
+                Auction
+            </button>
+        </form>
+    </div>
+</div>
 
-	<section class="column right">
-		<div>
-			<h2 class="special">Auction details:</h2>
-			<table class="tableArrangement">
-				<thead>
-					<tr>
-						<th>AuctionID</th>
-						<th>Title</th>
-						<th>Sarting Price</th>
-						<th>Minimum Increase</th>
-						<th>Expiry Date</th>
-						<th>Actual Price</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="d : ${openAuction}">
-						<td th:text="${d.auctionID}"></td>
-						<td th:text="${d.title}"></td>
-						<td><span
-							th:text="${#numbers.formatDecimal(d.startingPrice, 0, 'COMMA', 2, 'POINT')}"></span></td>
-						<td><span
-							th:text="${#numbers.formatDecimal(d.minIncrease, 0, 'COMMA', 2, 'POINT')}"></span></td>
-						<td th:text="${expiryDate}"></td>
-						<td><span
-							th:text="${#numbers.formatDecimal(d.actualPrice, 0, 'COMMA', 2, 'POINT')}"></span></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+<section class="column right">
+    <div>
+        <h2 class="special">Auction details:</h2>
+        <table class="tableArrangement">
+            <thead>
+            <tr>
+                <th>AuctionID</th>
+                <th>Title</th>
+                <th>Sarting Price</th>
+                <th>Minimum Increase</th>
+                <th>Expiry Date</th>
+                <th>Actual Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="d : ${openAuction}">
+                <td th:text="${d.auctionID}"></td>
+                <td th:text="${d.title}"></td>
+                <td><span
+                        th:text="${#numbers.formatDecimal(d.startingPrice, 0, 'COMMA', 2, 'POINT')}"></span></td>
+                <td><span
+                        th:text="${#numbers.formatDecimal(d.minIncrease, 0, 'COMMA', 2, 'POINT')}"></span></td>
+                <td th:text="${expiryDate}"></td>
+                <td><span
+                        th:text="${#numbers.formatDecimal(d.actualPrice, 0, 'COMMA', 2, 'POINT')}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-		<div>
-			<h2 class="special">Articles in this auction:</h2>
-			<table class="tableArrangement">
-				<thead>
-					<tr>
-						<th>ArticleID</th>
-						<th>Name</th>
-						<th>Description</th>
-						<th>Image</th>
-						<th>Price</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="d : ${articlesList}">
-						<td th:text="${d.articleID}"></td>
-						<td th:text="${d.name}"></td>
-						<td><span th:text="${d.description}"></span></td>
-						<td><img th:src="${d.image}"
-							width="100" height="100" /></img></td>
-						<td><span
-							th:text="${#numbers.formatDecimal(d.price, 0, 'COMMA', 2, 'POINT')}"></span></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+    <div>
+        <h2 class="special">Articles in this auction:</h2>
+        <table class="tableArrangement">
+            <thead>
+            <tr>
+                <th>ArticleID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="d : ${articlesList}">
+                <td th:text="${d.articleID}"></td>
+                <td th:text="${d.name}"></td>
+                <td><span th:text="${d.description}"></span></td>
+                <td><img th:src="${d.image}"
+                         width="100" height="100"/></img></td>
+                <td><span
+                        th:text="${#numbers.formatDecimal(d.price, 0, 'COMMA', 2, 'POINT')}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-		<h2 class="special">Offers for this auction:</h2>
-		<div th:unless="${offersList.isEmpty()} or ${offersList} == null">	
-			<table class="tableArrangement">
-				<thead>
-					<tr>
-						<th>UserID</th>
-						<th>Price</th>
-						<th>Date</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="o : ${offersList}">
-						<td th:text="${o.key.userID}"></td>
-						<td><span
-							th:text="${#numbers.formatDecimal(o.key.price, 0, 'COMMA', 2, 'POINT')}"></span></td>
-						<td><span th:text="${o.value}"></span></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<p class="special" th:if="${offersList.isEmpty()} or ${offersList} == null">There
-			are no offers for this auction</p>
-	</section>
+    <h2 class="special">Offers for this auction:</h2>
+    <div th:unless="${offersList.isEmpty()} or ${offersList} == null">
+        <table class="tableArrangement">
+            <thead>
+            <tr>
+                <th>UserID</th>
+                <th>Price</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="o : ${offersList}">
+                <td th:text="${o.key.userID}"></td>
+                <td><span
+                        th:text="${#numbers.formatDecimal(o.key.price, 0, 'COMMA', 2, 'POINT')}"></span></td>
+                <td><span th:text="${o.value}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p class="special" th:if="${offersList.isEmpty()} or ${offersList} == null">There
+        are no offers for this auction</p>
+</section>
 </body>
 </html>

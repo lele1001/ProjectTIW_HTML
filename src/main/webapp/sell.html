@@ -2,179 +2,180 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+    <meta charset="ISO-8859-1">
 
-<title>Sell</title>
-<link rel="stylesheet" type="text/css" media="all" href="./myStyle.css"
-	th:href="@{/myStyle.css}" />
+    <title>Sell</title>
+    <link rel="stylesheet" type="text/css" media="all" href="./myStyle.css"
+          th:href="@{/myStyle.css}"/>
 </head>
 
 <body>
-	<div class="column left">
-		<ul>
-			<li><a th:href="home.html">Homepage</a></li>
-			<li><a href="buy.html" th:href="@{/GoToBuyPage}">Buy</a></li>
-			<li><a th:href="@{/Logout}">Logout</a></li>
-		</ul>
-	</div>
+<div class="column left">
+    <ul>
+        <li><a th:href="home.html">Homepage</a></li>
+        <li><a href="buy.html" th:href="@{/GoToBuyPage}">Buy</a></li>
+        <li><a th:href="@{/Logout}">Logout</a></li>
+    </ul>
+</div>
 
-	<section class="column right">
-		<h2 class="special">Your Open Auctions:</h2>
-		<div
-			th:unless="${userOpenAuctions} == null or ${userOpenAuctions.isEmpty()}">
-			<table class="tableArrangement">
-				<thead>
-					<tr>
-						<th>AuctionID</th>
-						<th>Title</th>
-						<th>Actual Price</th>
-						<th>Expiry Date</th>
-						<th>Link</th>
-					</tr>
-				</thead>
+<section class="column right">
+    <h2 class="special">Your Open Auctions:</h2>
+    <div
+            th:unless="${userOpenAuctions} == null or ${userOpenAuctions.isEmpty()}">
+        <table class="tableArrangement">
+            <thead>
+            <tr>
+                <th>AuctionID</th>
+                <th>Title</th>
+                <th>Actual Price</th>
+                <th>Expiry Date</th>
+                <th>Link</th>
+            </tr>
+            </thead>
 
-				<tbody>
-					<tr th:each="d : ${userOpenAuctions}">
-						<td th:text="${d.key.auctionID}"></td>
-						<td th:text="${d.key.title}"></td>
-						<td><span
-							th:text="${#numbers.formatDecimal(d.key.actualPrice, 0, 'COMMA', 2, 'POINT')}"></span></td>
-						<td th:text="${d.value}"></td>
-						<td><a
-							th:href="@{/OpenAuctionDetails(auctionID=${d.key.auctionID})}">Auction
-								Details</a></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<p class="special"
-			th:if="${userOpenAuctions} == null or ${userOpenAuctions.isEmpty()}">You
-			do not have any open auction</p>
+            <tbody>
+            <tr th:each="d : ${userOpenAuctions}">
+                <td th:text="${d.key.auctionID}"></td>
+                <td th:text="${d.key.title}"></td>
+                <td><span
+                        th:text="${#numbers.formatDecimal(d.key.actualPrice, 0, 'COMMA', 2, 'POINT')}"></span></td>
+                <td th:text="${d.value}"></td>
+                <td><a
+                        th:href="@{/OpenAuctionDetails(auctionID=${d.key.auctionID})}">Auction
+                    Details</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p class="special"
+       th:if="${userOpenAuctions} == null or ${userOpenAuctions.isEmpty()}">You
+        do not have any open auction</p>
 
-		<h2 class="special">Your Closed Auctions:</h2>
-		<div
-			th:unless="${userClosedAuctions} == null or ${userClosedAuctions.isEmpty()}">
-			<table class="tableArrangement">
-				<thead>
-					<tr>
-						<th>AuctionID</th>
-						<th>WinnerID</th>
-						<th>Title</th>
-						<th>Price</th>
-						<th>Link</th>
-					</tr>
-				</thead>
+    <h2 class="special">Your Closed Auctions:</h2>
+    <div
+            th:unless="${userClosedAuctions} == null or ${userClosedAuctions.isEmpty()}">
+        <table class="tableArrangement">
+            <thead>
+            <tr>
+                <th>AuctionID</th>
+                <th>WinnerID</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Link</th>
+            </tr>
+            </thead>
 
-				<tbody>
-					<tr th:each="d : ${userClosedAuctions}">
-						<td th:text="${d.auctionID}"></td>
-						<td th:text="${d.winnerID}"></td>
-						<td th:text="${d.title}"></td>
-						<td><span
-							th:text="${#numbers.formatDecimal(d.actualPrice, 0, 'COMMA', 2, 'POINT')}"></span></td>
-						<td><a
-							th:href="@{/ClosedAuctionDetails(auctionID=${d.auctionID})}">Auction
-								Details</a></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<p class="special"
-			th:if="${userClosedAuctions} == null or ${userClosedAuctions.isEmpty()}">You
-			do not have any closed auction</p>
+            <tbody>
+            <tr th:each="d : ${userClosedAuctions}">
+                <td th:text="${d.auctionID}"></td>
+                <td th:text="${d.winnerID}"></td>
+                <td th:text="${d.title}"></td>
+                <td><span
+                        th:text="${#numbers.formatDecimal(d.actualPrice, 0, 'COMMA', 2, 'POINT')}"></span></td>
+                <td><a
+                        th:href="@{/ClosedAuctionDetails(auctionID=${d.auctionID})}">Auction
+                    Details</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p class="special"
+       th:if="${userClosedAuctions} == null or ${userClosedAuctions.isEmpty()}">You
+        do not have any closed auction</p>
 
-		<div>
-			<div>
-				<h2 class="special">Create article:</h2>
-				<p class="special">Insert the details to create a new article</p>
+    <div>
+        <div>
+            <h2 class="special">Create article:</h2>
+            <p class="special">Insert the details to create a new article</p>
 
-				<form class="createForm" th:action="@{/CreateArticle}" method="POST"
-					enctype="multipart/form-data">
-					<fieldset>
-						<ul>
-							<li>Article Name: <label> <input type="text"
-									name="name" maxlength="20" required />
-							</label>
-							</li>
-							<li>Description: <label> <input type="text"
-									name="description" maxlength="100" required />
-							</label>
-							</li>
+            <form class="createForm" th:action="@{/CreateArticle}" method="POST"
+                  enctype="multipart/form-data">
+                <fieldset>
+                    <ul>
+                        <li>Article Name: <label> <input type="text"
+                                                         name="name" maxlength="20" required/>
+                        </label>
+                        </li>
+                        <li>Description: <label> <input type="text"
+                                                        name="description" maxlength="100" required/>
+                        </label>
+                        </li>
 
-							<li>Price: <label> <input type="number" min="0"
-									step=".01" name="price" required />
-							</label>
-							</li>
+                        <li>Price: <label> <input type="number" min="0"
+                                                  step=".01" name="price" required/>
+                        </label>
+                        </li>
 
-							<li>Image Link: <input type="file" name="image"
-								accept="image/*" required />
-							</li>
-						</ul>
+                        <li>Image Link: <input type="file" name="image"
+                                               accept="image/*" required/>
+                        </li>
+                    </ul>
 
-						<button type="submit">Create Article</button>
-					</fieldset>
-				</form>
-			</div>
+                    <button type="submit">Create Article</button>
+                </fieldset>
+            </form>
+        </div>
 
-			<div>
-				<h2 class="special">Create Auction:</h2>
-				<p class="special">Insert the details and select the articles
-					and to create a new auction</p>
+        <div>
+            <h2 class="special">Create Auction:</h2>
+            <p class="special">Insert the details and select the articles
+                and to create a new auction</p>
 
-				<form class="createForm" id="createAuction"
-					th:action="@{/CreateAuction}" method="POST"
-					enctype="multipart/form-data">
-					<fieldset>
-						<p>
-							Auction Title: <label> <input type="text" name="title"
-								maxlength="20" required />
-							</label>
-						</p>
+            <form class="createForm" id="createAuction"
+                  th:action="@{/CreateAuction}" method="POST"
+                  enctype="multipart/form-data">
+                <fieldset>
+                    <p>
+                        Auction Title: <label> <input type="text" name="title"
+                                                      maxlength="20" required/>
+                    </label>
+                    </p>
 
-						<p>
-							Minimum Increase: <label> <input type="number" min="0"
-								step=".01" name="minIncrease" required />
-							</label>
-						</p>
+                    <p>
+                        Minimum Increase: <label> <input type="number" min="0"
+                                                         step=".01" name="minIncrease" required/>
+                    </label>
+                    </p>
 
-						<p>
-							Expiry Date: <label> <input type="datetime-local"
-								name="expiryDate" placeholder="yyyy-mm-dd HH:mm"
-								min="2023-04-13T00:00" required />
-							</label>
-						</p>
-						<div
-							th:unless="${userArticles} == null or ${userArticles.isEmpty()}">
-							<p>Select the articles to insert in the auction:</p>
-							<table class="tableArrangement" id="myArticles">
-								<thead>
-									<tr>
-										<th>ArticleID</th>
-										<th>Name</th>
-										<th>Price</th>
-										<th>Select</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr class="item" th:each="d : ${userArticles}">
-										<td class="item-id" th:text="${d.articleID}"></td>
-										<td th:text="${d.name}"></td>
-										<td><span
-											th:text="${#numbers.formatDecimal(d.price, 0, 'COMMA', 2, 'POINT')}"></span></td>
-										<td><input type="checkbox" name="articleIDs"
-											th:value="${d.articleID}" /></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<p class="special"
-							th:if="${userArticles} == null or ${userArticles.isEmpty()}">You
-							did not add any article</p>
-						<button type="submit">Create Auction</button>
-					</fieldset>
-				</form>
-			</div>
-		</div>
-	</section>
+                    <p>
+                        Expiry Date: <label> <input type="datetime-local"
+                                                    name="expiryDate" placeholder="yyyy-mm-dd HH:mm"
+                                                    min="2023-04-13T00:00" required/>
+                    </label>
+                    </p>
+                    <div
+                            th:unless="${userArticles} == null or ${userArticles.isEmpty()}">
+                        <p>Select the articles to insert in the auction:</p>
+                        <table class="tableArrangement" id="myArticles">
+                            <thead>
+                            <tr>
+                                <th>ArticleID</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Select</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="item" th:each="d : ${userArticles}">
+                                <td class="item-id" th:text="${d.articleID}"></td>
+                                <td th:text="${d.name}"></td>
+                                <td><span
+                                        th:text="${#numbers.formatDecimal(d.price, 0, 'COMMA', 2, 'POINT')}"></span>
+                                </td>
+                                <td><input type="checkbox" name="articleIDs"
+                                           th:value="${d.articleID}"/></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="special"
+                       th:if="${userArticles} == null or ${userArticles.isEmpty()}">You
+                        did not add any article</p>
+                    <button type="submit">Create Auction</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</section>
 </body>
 </html>
