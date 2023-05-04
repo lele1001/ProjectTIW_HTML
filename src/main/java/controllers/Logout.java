@@ -12,25 +12,25 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet("/Logout")
 public class Logout extends HttpServlet {
-    @Serial
-    private static final long serialVersionUID = 1L;
+	@Serial
+	private static final long serialVersionUID = 1L;
 
-    public Logout() {
-        super();
-    }
+	public Logout() {
+		super();
+	}
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession(false);
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HttpSession session = request.getSession(false);
 
-        if (session != null) {
-            session.invalidate();
-        }
+		if (session != null) {
+			session.invalidate();
+		}
 
-        response.sendRedirect(getServletContext().getContextPath() + "/index.html");
-    }
+		response.sendRedirect(getServletContext().getContextPath() + "/index.html");
+	}
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
-    }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
 }
