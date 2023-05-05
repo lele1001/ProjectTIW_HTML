@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.io.Serial;
 
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +18,7 @@ public class Logout extends HttpServlet {
 		super();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
@@ -27,7 +28,7 @@ public class Logout extends HttpServlet {
 		response.sendRedirect(getServletContext().getContextPath() + "/index.html");
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		doGet(request, response);
 	}
 }

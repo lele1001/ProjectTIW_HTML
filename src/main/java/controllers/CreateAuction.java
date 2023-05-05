@@ -160,14 +160,14 @@ public class CreateAuction extends HttpServlet {
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// checks if the session does not exist or is expired
 		if (request.getSession(false) == null || request.getSession(false).getAttribute("user") == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.html");
 		} else {
 			try {
 				createAuction(request, response);
-			} catch (SQLException e) {
+			} catch (SQLException | IOException e) {
 				e.printStackTrace();
 			}
 		}

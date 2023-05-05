@@ -72,7 +72,7 @@ public class Login extends HttpServlet {
 	 * Manages the login process
 	 */
 	private void manageLogin(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException {
+			throws ServletException, IOException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		User user = null;
