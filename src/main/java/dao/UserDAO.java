@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import beans.User;
 
 public class UserDAO {
-	private Connection connection;
+	private final Connection connection;
 	String query = "";
 	PreparedStatement statement = null;
 	ResultSet result = null;

@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.IOException;
 import java.io.Serial;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -84,14 +83,13 @@ public class GoToBuyPage extends HttpServlet {
 		return diffDays + " days and " + hoursBetween + " hours";
 	}
 
-	private void setupPage(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
+	private void setupPage(HttpServletRequest request, HttpServletResponse response) {
 		User user = (User) request.getSession(false).getAttribute("user");
 		LocalDateTime loginTime = (LocalDateTime) request.getSession(false).getAttribute("loginTime");
 		String key = request.getParameter("key");
 
 		List<Auction> wonAuctions;
-		List<Auction> keyAuctionsList = null;
+		List<Auction> keyAuctionsList;
 		// contains all the auctions with their remaining times formatted as strings
 		LinkedHashMap<Auction, String> keyAuctions = null;
 
@@ -156,21 +154,16 @@ public class GoToBuyPage extends HttpServlet {
 		}
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		// checks if the session does not exist or is expired
 		if (request.getSession(false) == null || request.getSession(false).getAttribute("user") == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.html");
 		} else {
-			try {
-				setupPage(request, response);
-			} catch (IOException | ServletException e) {
-				e.printStackTrace();
-			}
+			setupPage(request, response);
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		doGet(request, response);
 	}
 

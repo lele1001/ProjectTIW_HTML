@@ -73,7 +73,7 @@ public class ClosedAuctionDetails extends HttpServlet {
 	}
 
 	private void setupPage(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws IOException {
 		int auctionID = Integer.parseInt(request.getParameter("auctionID"));
 
 		User winner = null;
@@ -153,7 +153,7 @@ public class ClosedAuctionDetails extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws IOException {
 		// checks if the session does not exist or is expired
 		if (request.getSession(false) == null || request.getSession(false).getAttribute("user") == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.html");
@@ -163,7 +163,7 @@ public class ClosedAuctionDetails extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws IOException {
 		doPost(request, response);
 	}
 

@@ -23,7 +23,7 @@ public class ArticleDAO {
 	}
 
 	/**
-	 * Loads an image from file and encodes it into a base64 string
+	 * Loads an image from a file and encodes it into a base64 string
 	 */
 	private static String encodeImage(String fileName) {
 		if (fileName == null || fileName.isEmpty()) {
@@ -40,20 +40,12 @@ public class ArticleDAO {
 		}
 
 		final String extension = splitExtension[1].toLowerCase();
-		String base64Extension = "";
-
-		switch (extension) {
-		case "jpg":
-		case "jpeg":
-			base64Extension = "jpeg";
-			break;
-		case "png":
-			base64Extension = "png";
-			break;
-		case "gif":
-			base64Extension = "gif";
-			break;
-		}
+		String base64Extension = switch (extension) {
+			case "jpg", "jpeg" -> "jpeg";
+			case "png" -> "png";
+			case "gif" -> "gif";
+			default -> "";
+		};
 
 		if (base64Extension.isEmpty()) {
 			return "";
@@ -225,8 +217,8 @@ public class ArticleDAO {
 	/**
 	 * Creates an article to insert in the database
 	 */
-	public boolean createArticle(int articleID, int ownerID, String name, String description, String imageName,
-			float price) throws SQLException {
+	public void createArticle(int articleID, int ownerID, String name, String description, String imageName,
+							  float price) throws SQLException {
 		query = "INSERT INTO article (articleID, ownerID, name, description, image, price) VALUES(?, ?, ?, ?, ?, ?)";
 		int result;
 
@@ -242,8 +234,8 @@ public class ArticleDAO {
 			result = statement.executeUpdate();
 
 			// if a row was updated, it means the article has been added
-			if (result > 0) {
-				return true;
+			if (result <= 0) {
+				System.out.println("Errore nella creazione dell'articolo");
 			}
 		} catch (SQLException e) {
 			try {
@@ -261,8 +253,6 @@ public class ArticleDAO {
 				throw new SQLException(e2);
 			}
 		}
-
-		return false;
 	}
 
 	/**

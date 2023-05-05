@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -29,6 +30,7 @@ import utilities.ConnectionHandler;
 
 @WebServlet("/GoToSellPage")
 public class GoToSellPage extends HttpServlet {
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private Connection connection = null;
 	private TemplateEngine templateEngine;
@@ -38,7 +40,7 @@ public class GoToSellPage extends HttpServlet {
 	}
 
 	/**
-	 * initializes the configuration of the servlet, of the thymeleaf engine and
+	 * Initializes the configuration of the servlet, of the thymeleaf engine and
 	 * connects to the database
 	 */
 	public void init() throws ServletException {
@@ -57,7 +59,7 @@ public class GoToSellPage extends HttpServlet {
 	}
 
 	/**
-	 * checks if the connection is active
+	 * Checks if the connection is active
 	 */
 	private boolean checkConnection(Connection connection) {
 		try {
@@ -78,11 +80,10 @@ public class GoToSellPage extends HttpServlet {
 		return diffDays + " days and " + hoursBetween + " hours";
 	}
 
-	private void setupPage(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		List<Auction> openAuctionsList = null;
-		List<Auction> closedAuctions = null;
-		List<Article> userArticles = null;
+	private void setupPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		List<Auction> openAuctionsList;
+		List<Auction> closedAuctions;
+		List<Article> userArticles;
 		// contains all the auctions with their remaining times formatted as strings
 		LinkedHashMap<Auction, String> openAuctions = null;
 
@@ -151,8 +152,8 @@ public class GoToSellPage extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// checks if the session does not exists or is expired
+			throws IOException {
+		// checks if the session does not exist or is expired
 		if (request.getSession(false) == null || request.getSession(false).getAttribute("user") == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.html");
 		} else {
@@ -160,13 +161,12 @@ public class GoToSellPage extends HttpServlet {
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// doGet(request, response);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		doGet(request, response);
 	}
 
 	/**
-	 * called when the servlet is destroyed
+	 * Called when the servlet is destroyed
 	 */
 	public void destroy() {
 		try {

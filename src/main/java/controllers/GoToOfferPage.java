@@ -143,11 +143,7 @@ public class GoToOfferPage extends HttpServlet {
 				// checks if the auction is expired
 				LocalDateTime curr = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
 				isExpired = curr.isAfter(auction.getExpiryDate());
-				if (user.getUserID() == auction.getOwnerID()) {
-					myAuc = true;
-				} else {
-					myAuc = false;
-				}
+				myAuc = user.getUserID() == auction.getOwnerID();
 
 				// reformat the expiryDate and makes it more readable
 				formatDate = auction.getExpiryDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.Serial;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Random;
@@ -73,7 +72,7 @@ public class CreateAuction extends HttpServlet {
 	}
 
 	private void createAuction(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, SQLException, ParseException {
+			throws SQLException, IOException {
 		User user = (User) request.getSession(false).getAttribute("user");
 		String[] articlesIDs = request.getParameterValues("articleIDs");
 
@@ -111,7 +110,7 @@ public class CreateAuction extends HttpServlet {
 				int articleID = Integer.parseInt(s);
 
 				try {
-					// retrieves each selected article and checks if its owner if th e current user
+					// retrieves each selected article and checks if its owner is the current user
 					// and if it is associated to another auction
 					a = art.getArticleByID(articleID);
 
@@ -124,7 +123,7 @@ public class CreateAuction extends HttpServlet {
 								"Errore: non puoi inserire un'articolo presente in un'altra asta!");
 						return;
 					}
-				} catch (SQLException e) {
+				} catch (SQLException | IOException e) {
 					e.printStackTrace();
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 							"Errore: accesso al database fallito!");
@@ -148,7 +147,7 @@ public class CreateAuction extends HttpServlet {
 
 			try {
 				auc.createAuction(auctionID, user.getUserID(), title, price, minIncrease, expiryDate);
-			} catch (SQLException | ParseException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Errore: accesso al database fallito!");
@@ -161,15 +160,14 @@ public class CreateAuction extends HttpServlet {
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		// checks if the session does not exist or is expired
 		if (request.getSession(false) == null || request.getSession(false).getAttribute("user") == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.html");
 		} else {
 			try {
 				createAuction(request, response);
-			} catch (ServletException | IOException | SQLException | ParseException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}

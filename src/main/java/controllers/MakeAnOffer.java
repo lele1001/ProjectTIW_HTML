@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.Serial;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -54,8 +53,7 @@ public class MakeAnOffer extends HttpServlet {
 		return false;
 	}
 
-	private void setupPage(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	private void setupPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		User user = (User) request.getSession(false).getAttribute("user");
 		int auctionID = Integer.parseInt(request.getParameter("auctionID"));
 		float newPrice = Float.parseFloat(request.getParameter("price"));
@@ -69,7 +67,7 @@ public class MakeAnOffer extends HttpServlet {
 			AuctionDAO auc = new AuctionDAO(connection);
 
 			try {
-				// retrieves the auction, checks if it is owned by the user, if it is expired
+				// retrieves the auction, checks if it is owned by the user if it is expired
 				// and if the new price fulfills the requirements
 				auction = auc.getOpenAuctionByID(auctionID);
 
@@ -119,7 +117,7 @@ public class MakeAnOffer extends HttpServlet {
 
 				// updates the price
 				auc.updatePrice(auctionID, newPrice);
-			} catch (SQLException | ParseException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Errore: accesso al database fallito!");
@@ -133,7 +131,7 @@ public class MakeAnOffer extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws IOException {
 		// checks if the session does not exist or is expired
 		if (request.getSession(false) == null || request.getSession(false).getAttribute("user") == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.html");

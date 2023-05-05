@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +55,8 @@ public class OfferDAO {
 		return offersList;
 	}
 
-	public boolean createOffer(int userID, int auctionID, LocalDateTime date, float price)
-			throws SQLException, ParseException {
+	public void createOffer(int userID, int auctionID, LocalDateTime date, float price)
+			throws SQLException {
 		query = "INSERT INTO offer (userID, auctionID, offerDate, price) VALUES(?, ?, ?, ?)";
 		int result;
 
@@ -70,8 +69,8 @@ public class OfferDAO {
 			result = statement.executeUpdate();
 
 			// if a row was updated, the offer has been added
-			if (result > 0) {
-				return true;
+			if (result <= 0) {
+				System.out.println("Errore");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -85,7 +84,6 @@ public class OfferDAO {
 			}
 		}
 
-		return false;
 	}
 
 	public Offer getMaxOffer(int auctionID) throws SQLException {

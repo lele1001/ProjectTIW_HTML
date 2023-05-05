@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +65,8 @@ public class AuctionDAO {
 	 * Finds the closed auctions owned by the user
 	 */
 	public List<Auction> getClosedAuctionsByUser(int userID) throws SQLException {
-		query = "SELECT * FROM auction WHERE ownerID = ? AND isClosed = 1 ORDER BY expiryDate DESC";
 		List<Auction> closedAuctions = new ArrayList<>();
+		query = "SELECT * FROM auction WHERE ownerID = ? AND isClosed = 1 ORDER BY expiryDate DESC";
 
 		try {
 			statement = connection.prepareStatement(query);
@@ -107,8 +106,8 @@ public class AuctionDAO {
 	/**
 	 * Creates an auction, that is open by default
 	 */
-	public boolean createAuction(int auctionID, int ownerID, String title, float startingPrice, float minIncrease,
-			LocalDateTime expiryDate) throws SQLException, ParseException {
+	public void createAuction(int auctionID, int ownerID, String title, float startingPrice, float minIncrease,
+							  LocalDateTime expiryDate) throws SQLException {
 		query = "INSERT INTO auction (auctionID, ownerID, title, startingPrice, minIncrease, expiryDate, actualPrice, isClosed) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 		int result;
 
@@ -125,8 +124,8 @@ public class AuctionDAO {
 			statement.setInt(8, 0);
 			result = statement.executeUpdate();
 
-			if (result > 0) {
-				return true;
+			if (result <= 0) {
+				System.out.println("Errore");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -139,7 +138,6 @@ public class AuctionDAO {
 				throw new SQLException(e2);
 			}
 		}
-		return false;
 	}
 
 	/**
@@ -383,7 +381,7 @@ public class AuctionDAO {
 	}
 
 	/**
-	 * updates an open auction price after an offer
+	 * Updates an open auction price after an offer
 	 */
 	public void updatePrice(int auctionID, float price) throws SQLException {
 		// associates the winner to the auction
@@ -397,8 +395,8 @@ public class AuctionDAO {
 			result2 = statement.executeUpdate();
 
 			// if a row was updated, it means the article has been added
-			if (result2 > 0) {
-				return;
+			if (result2 <= 0) {
+				System.out.println("Errore");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

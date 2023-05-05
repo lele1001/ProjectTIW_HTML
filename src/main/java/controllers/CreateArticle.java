@@ -73,7 +73,7 @@ public class CreateArticle extends HttpServlet {
 	}
 
 	private void createArticle(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException {
 		User user = (User) request.getSession(false).getAttribute("user");
 
 		int articleID;

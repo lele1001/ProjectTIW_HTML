@@ -57,14 +57,14 @@ public class CloseOpenAuction extends HttpServlet {
 	 * owner
 	 */
 	private void closeAuction(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws IOException {
 		User user = (User) request.getSession(false).getAttribute("user");
 		int auctionID = Integer.parseInt(request.getParameter("auctionID"));
 
 		Auction auction;
 		Offer maxOffer;
 		int winnerID = 0;
-		boolean isExpired = false;
+		boolean isExpired;
 
 		// checks if the connection is active
 		if (checkConnection(connection)) {
@@ -124,7 +124,7 @@ public class CloseOpenAuction extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws IOException {
 		// checks if the session does not exist or is expired
 		if (request.getSession(false) == null || request.getSession(false).getAttribute("user") == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.html");
