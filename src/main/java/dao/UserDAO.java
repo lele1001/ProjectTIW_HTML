@@ -1,8 +1,11 @@
 package dao;
 
-import beans.User;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-import java.sql.*;
+import beans.User;
 
 public class UserDAO {
 	private Connection connection;
