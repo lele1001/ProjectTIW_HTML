@@ -1,4 +1,4 @@
-# Progetto di Tecnologie Informatiche per il Web - versione HTML pura (A.A. 2022/2023)
+# Progetto TIW - versione HTML pura (A.A. 2022/2023)
 
 **ITA** -Il progetto ha come obbiettivo la creazione di un'applicazione web che rispetti le specifiche fornite dal docente. Questo progetto, insieme alla suan versione RIA, è valido come prova d'esame per il corso **"Tecnologie Informatiche per il Web"** del percorso di laurea in **Ingegneria Informatica** del Politecnico di Milano.
 
