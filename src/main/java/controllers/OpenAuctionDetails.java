@@ -25,6 +25,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import beans.Article;
 import beans.Auction;
 import beans.Offer;
+import beans.User;
 import dao.ArticleDAO;
 import dao.AuctionDAO;
 import dao.OfferDAO;
@@ -75,7 +76,20 @@ public class OpenAuctionDetails extends HttpServlet {
 	}
 
 	private void setupPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		int auctionID = Integer.parseInt(request.getParameter("auctionID"));
+		int auctionID;
+		User user = (User) request.getSession(false).getAttribute("user");
+		
+		try {
+			auctionID = Integer.parseInt(request.getParameter("auctionID"));
+		} catch (NumberFormatException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Errore: inserire un intero!");
+			return;
+		}
+		
+		if (auctionID < 0) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Errore: inserire un intero positivo!");
+			return;
+		}
 
 		Auction auction;
 		List<Offer> offers;
@@ -95,13 +109,13 @@ public class OpenAuctionDetails extends HttpServlet {
 				// retrieves the auction
 				auction = auc.getOpenAuctionByID(auctionID);
 			} catch (SQLException e) {
-				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Errore: accesso al database fallito!");
 				return;
 			}
 
-			if (auction != null) {
+			if (auction != null && user.getUserID() == auction.getOwnerID()) {
+				// todo check sull'owner
 				OfferDAO off = new OfferDAO(connection);
 
 				try {
@@ -119,7 +133,6 @@ public class OpenAuctionDetails extends HttpServlet {
 						}
 					}
 				} catch (SQLException e) {
-					e.printStackTrace();
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 							"Errore: accesso al database fallito!");
 					return;
@@ -131,7 +144,6 @@ public class OpenAuctionDetails extends HttpServlet {
 					// retrieves the articles in the auction
 					articlesList = art.getArticlesByAuctionID(auctionID);
 				} catch (SQLException e) {
-					e.printStackTrace();
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 							"Errore: accesso al database fallito!");
 					return;
@@ -165,18 +177,16 @@ public class OpenAuctionDetails extends HttpServlet {
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// checks if the session does not exist or is expired
 		if (request.getSession(false) == null || request.getSession(false).getAttribute("user") == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.html");
-		} else if (Integer.parseInt(request.getParameter("auctionID")) > 0) {
+		} else {
 			setupPage(request, response);
 		}
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		doPost(request, response);
 	}
 
@@ -187,7 +197,6 @@ public class OpenAuctionDetails extends HttpServlet {
 		try {
 			ConnectionHandler.closeConnection(connection);
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 	}
 }

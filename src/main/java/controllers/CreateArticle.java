@@ -84,15 +84,20 @@ public class CreateArticle extends HttpServlet {
 		try {
 			articleID = generateArticleID();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore: accesso al database fallito!");
 			return;
 		}
+		
 		Part imagePart = request.getPart("image");
 		String fileName;
 		String contentType, outputPath;
-
-		price = Float.parseFloat(request.getParameter("price"));
+		
+		try {
+			price = Float.parseFloat(request.getParameter("price"));
+		} catch (NumberFormatException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Errore: inserire un numero!");
+			return;
+		}
 
 		// checks if the connection is active
 		if (checkConnection(connection)) {
@@ -124,7 +129,6 @@ public class CreateArticle extends HttpServlet {
 					Files.copy(fileContent, Paths.get(outputPath));
 					System.out.println("File saved correctly!");
 				} catch (Exception e) {
-					e.printStackTrace();
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error while saving file");
 					return;
 				}
@@ -144,7 +148,6 @@ public class CreateArticle extends HttpServlet {
 			try {
 				art.createArticle(articleID, user.getUserID(), name, description, fileName, price);
 			} catch (SQLException e) {
-				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Errore: accesso al database fallito!");
 				return;

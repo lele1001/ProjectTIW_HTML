@@ -55,8 +55,28 @@ public class MakeAnOffer extends HttpServlet {
 
 	private void setupPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		User user = (User) request.getSession(false).getAttribute("user");
-		int auctionID = Integer.parseInt(request.getParameter("auctionID"));
-		float newPrice = Float.parseFloat(request.getParameter("price"));
+		int auctionID;
+		
+		try {
+			auctionID = Integer.parseInt(request.getParameter("auctionID"));
+		} catch (NumberFormatException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Errore: inserire un numero!");
+			return;
+		}
+		
+		if (auctionID < 0) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Errore: inserire un intero positivo!");
+			return;
+		}
+		
+		float newPrice;
+		
+		try {
+			newPrice = Float.parseFloat(request.getParameter("price"));
+		} catch (NumberFormatException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Errore: inserire un numero!");
+			return;
+		}
 
 		LocalDateTime offerDate = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
 		Auction auction;
@@ -87,7 +107,6 @@ public class MakeAnOffer extends HttpServlet {
 					return;
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Errore: accesso al database fallito!");
 				return;
@@ -105,7 +124,6 @@ public class MakeAnOffer extends HttpServlet {
 					return;
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Errore: accesso al database fallito!");
 				return;
@@ -118,7 +136,6 @@ public class MakeAnOffer extends HttpServlet {
 				// updates the price
 				auc.updatePrice(auctionID, newPrice);
 			} catch (SQLException e) {
-				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Errore: accesso al database fallito!");
 				return;

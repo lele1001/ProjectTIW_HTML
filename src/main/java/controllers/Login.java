@@ -88,7 +88,6 @@ public class Login extends HttpServlet {
 						user = log.checkCredentials(username, password);
 					}
 				} catch (SQLException e) {
-					e.printStackTrace();
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 							"Errore: accesso al database fallito!");
 					return;

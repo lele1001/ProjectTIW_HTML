@@ -59,7 +59,19 @@ public class CloseOpenAuction extends HttpServlet {
 	private void closeAuction(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		User user = (User) request.getSession(false).getAttribute("user");
-		int auctionID = Integer.parseInt(request.getParameter("auctionID"));
+		int auctionID;
+		
+		try {
+			auctionID = Integer.parseInt(request.getParameter("auctionID"));
+		} catch (NumberFormatException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Errore: inserire un intero!");
+			return;
+		}
+		
+		if (auctionID < 0) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Errore: inserire un intero positivo!");
+			return;
+		}
 
 		Auction auction;
 		Offer maxOffer;
@@ -86,7 +98,6 @@ public class CloseOpenAuction extends HttpServlet {
 					return;
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Errore: accesso al database fallito!");
 				return;
@@ -102,7 +113,6 @@ public class CloseOpenAuction extends HttpServlet {
 					winnerID = maxOffer.getUserID();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Errore: accesso al database fallito!");
 				return;
@@ -111,7 +121,6 @@ public class CloseOpenAuction extends HttpServlet {
 			try {
 				auc.closeAuction(auctionID, winnerID);
 			} catch (SQLException e) {
-				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Errore: accesso al database fallito!");
 				return;
@@ -128,7 +137,7 @@ public class CloseOpenAuction extends HttpServlet {
 		// checks if the session does not exist or is expired
 		if (request.getSession(false) == null || request.getSession(false).getAttribute("user") == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.html");
-		} else if (Integer.parseInt(request.getParameter("auctionID")) > 0) {
+		} else {
 			closeAuction(request, response);
 		}
 	}

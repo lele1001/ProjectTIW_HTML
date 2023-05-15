@@ -117,7 +117,6 @@ public class GoToBuyPage extends HttpServlet {
 							keyAuctions = null;
 						}
 					} catch (SQLException e) {
-						e.printStackTrace();
 						response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 								"Errore: accesso al database fallito!");
 						return;
@@ -133,7 +132,6 @@ public class GoToBuyPage extends HttpServlet {
 				// retrieves all the auctions won by the user
 				wonAuctions = auc.getWonAuctions(user.getUserID());
 			} catch (SQLException e) {
-				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Errore: accesso al database fallito!");
 				return;

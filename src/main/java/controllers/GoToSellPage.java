@@ -110,7 +110,6 @@ public class GoToSellPage extends HttpServlet {
 					}
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Errore: accesso al database fallito!");
 				return;
@@ -120,7 +119,6 @@ public class GoToSellPage extends HttpServlet {
 				// retrieves all user's closed auctions ordered by deadline ascending
 				closedAuctions = auc.getClosedAuctionsByUser(userID);
 			} catch (SQLException e) {
-				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Errore: accesso al database fallito!");
 				return;
@@ -132,7 +130,6 @@ public class GoToSellPage extends HttpServlet {
 				// retrieves all user's articles that are not in an auction
 				userArticles = art.getArticlesByUserIDNotInAuctions(userID);
 			} catch (SQLException e) {
-				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Errore: accesso al database fallito!");
 				return;

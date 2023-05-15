@@ -15,7 +15,7 @@
 	</context-param>
 	<context-param>
 		<param-name>dbPassword</param-name>
-		<param-value>ELE2001ele2001</param-value>
+		<param-value>yourPassword</param-value>
 	</context-param>
 	<context-param>
 		<param-name>dbDriver</param-name>
@@ -23,8 +23,7 @@
 	</context-param>
 	<context-param>
 		<param-name>basePath</param-name>
-		<!--qua ci inserisci il path della cartella nella quale vuoi copiare le immagini -->
-		<param-value>C:\Users\eleon\Documents\universita\TIW\projectImages\</param-value>
+		<param-value>yourImagePath</param-value>
 	</context-param>
 
 	<welcome-file-list>

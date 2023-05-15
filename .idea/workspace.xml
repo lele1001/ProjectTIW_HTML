@@ -4,7 +4,35 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e62d17b-9f8e-49cb-99e0-4bca1cf356c7" name="Changes" comment="first commit" />
+    <list default="true" id="8e62d17b-9f8e-49cb-99e0-4bca1cf356c7" name="Changes" comment="first commit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/controllers/CloseOpenAuction.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/controllers/CloseOpenAuction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/controllers/ClosedAuctionDetails.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/controllers/ClosedAuctionDetails.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/controllers/CreateArticle.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/controllers/CreateArticle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/controllers/CreateAuction.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/controllers/CreateAuction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/controllers/GoToBuyPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/controllers/GoToBuyPage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/controllers/GoToOfferPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/controllers/GoToOfferPage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/controllers/GoToSellPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/controllers/GoToSellPage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/controllers/Login.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/controllers/Login.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/controllers/Logout.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/controllers/Logout.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/controllers/MakeAnOffer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/controllers/MakeAnOffer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/controllers/OpenAuctionDetails.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/controllers/OpenAuctionDetails.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/dao/ArticleDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/dao/ArticleDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/dao/AuctionDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/dao/AuctionDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/dao/OfferDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/dao/OfferDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/dao/UserDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/dao/UserDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/utilities/ConnectionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/utilities/ConnectionHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/CloseOpenAuction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/CloseOpenAuction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/ClosedAuctionDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/ClosedAuctionDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/CreateArticle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/CreateArticle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/CreateAuction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/CreateAuction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/GoToBuyPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/GoToBuyPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/GoToOfferPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/GoToOfferPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/GoToSellPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/GoToSellPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/MakeAnOffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/MakeAnOffer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/OpenAuctionDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/OpenAuctionDetails.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -147,7 +175,10 @@
       <option name="presentableId" value="Default" />
       <updated>1683267345979</updated>
       <workItem from="1683267346986" duration="1173000" />
-      <workItem from="1683268542880" duration="496000" />
+      <workItem from="1683268542880" duration="563000" />
+      <workItem from="1683269157063" duration="17000" />
+      <workItem from="1683269564891" duration="7000" />
+      <workItem from="1684141992593" duration="1000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1683268919867</created>
@@ -163,7 +194,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683269006383</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="first commit">
+      <created>1683269076270</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1683269076270</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

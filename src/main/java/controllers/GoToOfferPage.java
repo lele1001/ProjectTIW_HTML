@@ -77,8 +77,20 @@ public class GoToOfferPage extends HttpServlet {
 
 	private void setupPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		int auctionID = Integer.parseInt(request.getParameter("auctionID"));
 		User user = (User) request.getSession(false).getAttribute("user");
+		int auctionID;
+		
+		try {
+			auctionID = Integer.parseInt(request.getParameter("auctionID"));
+		} catch (NumberFormatException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Errore: inserire un intero!");
+			return;
+		}
+		
+		if (auctionID < 0) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Errore: inserire un intero positivo!");
+			return;
+		}
 
 		Auction auction;
 		List<Offer> offers;
@@ -99,7 +111,6 @@ public class GoToOfferPage extends HttpServlet {
 				// retrieves the auction
 				auction = auc.getOpenAuctionByID(auctionID);
 			} catch (SQLException e) {
-				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Errore: accesso al database fallito!");
 				return;
@@ -112,7 +123,6 @@ public class GoToOfferPage extends HttpServlet {
 					// retrieves the offers related to the auction
 					offers = off.getOffersByAuctionID(auctionID);
 				} catch (SQLException e) {
-					e.printStackTrace();
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 							"Errore: accesso al database fallito!");
 					return;
@@ -134,7 +144,6 @@ public class GoToOfferPage extends HttpServlet {
 					// retrieves the articles in the auction
 					articlesList = art.getArticlesByAuctionID(auctionID);
 				} catch (SQLException e) {
-					e.printStackTrace();
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 							"Errore: accesso al database fallito!");
 					return;
@@ -179,7 +188,7 @@ public class GoToOfferPage extends HttpServlet {
 		// checks if the session does not exist or is expired
 		if (request.getSession(false) == null || request.getSession(false).getAttribute("user") == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.html");
-		} else if (Integer.parseInt(request.getParameter("auctionID")) > 0) {
+		} else {
 			setupPage(request, response);
 		}
 	}

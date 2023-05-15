@@ -74,7 +74,19 @@ public class ClosedAuctionDetails extends HttpServlet {
 
 	private void setupPage(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-		int auctionID = Integer.parseInt(request.getParameter("auctionID"));
+		int auctionID;
+		
+		try {
+			auctionID = Integer.parseInt(request.getParameter("auctionID"));
+		} catch (NumberFormatException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Errore: inserire un intero!");
+			return;
+		}
+		
+		if (auctionID < 0) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Errore: inserire un intero positivo!");
+			return;
+		}
 
 		User winner = null;
 		Auction auction;
@@ -89,7 +101,6 @@ public class ClosedAuctionDetails extends HttpServlet {
 				// retrieves the auction
 				auction = auc.getClosedAuctionByID(auctionID);
 			} catch (SQLException e) {
-				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Errore: accesso al database fallito!");
 				return;
@@ -102,7 +113,6 @@ public class ClosedAuctionDetails extends HttpServlet {
 					// retrieves the maximum offer for the auction
 					maxOffer = off.getMaxOffer(auctionID);
 				} catch (SQLException e) {
-					e.printStackTrace();
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 							"Errore: accesso al database fallito!");
 					return;
@@ -115,7 +125,6 @@ public class ClosedAuctionDetails extends HttpServlet {
 						// retrieves the user that won the auction
 						winner = us.getUserByID(maxOffer.getUserID());
 					} catch (SQLException e) {
-						e.printStackTrace();
 						response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 								"Errore: accesso al database fallito!");
 						return;
@@ -128,7 +137,6 @@ public class ClosedAuctionDetails extends HttpServlet {
 					// retrieves the articles in the auction
 					articlesList = art.getArticlesByAuctionID(auctionID);
 				} catch (SQLException e) {
-					e.printStackTrace();
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 							"Errore: accesso al database fallito!");
 					return;
@@ -157,7 +165,7 @@ public class ClosedAuctionDetails extends HttpServlet {
 		// checks if the session does not exist or is expired
 		if (request.getSession(false) == null || request.getSession(false).getAttribute("user") == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.html");
-		} else if (Integer.parseInt(request.getParameter("auctionID")) > 0) {
+		} else {
 			setupPage(request, response);
 		}
 	}

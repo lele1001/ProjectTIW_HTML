@@ -72,17 +72,33 @@ public class CreateAuction extends HttpServlet {
 	}
 
 	private void createAuction(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, IOException {
+			throws IOException {
 		User user = (User) request.getSession(false).getAttribute("user");
 		String[] articlesIDs = request.getParameterValues("articleIDs");
 
-		int auctionID = generateAuctionID();
+		int auctionID;
+
+		try {
+			auctionID = generateAuctionID();
+		} catch (SQLException e) {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore: accesso al database fallito!");
+			return;
+		}
+
 		Article a;
 		float price = 0;
 		LocalDateTime expiryDate = LocalDateTime.parse(request.getParameter("expiryDate"))
 				.truncatedTo(ChronoUnit.MINUTES);
 		String title = request.getParameter("title");
-		float minIncrease = Float.parseFloat(request.getParameter("minIncrease"));
+
+		float minIncrease;
+
+		try {
+			minIncrease = Float.parseFloat(request.getParameter("minIncrease"));
+		} catch (NumberFormatException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Errore: inserire un numero!");
+			return;
+		}
 
 		// checks if the connection is active
 		if (checkConnection(connection)) {
@@ -107,7 +123,14 @@ public class CreateAuction extends HttpServlet {
 			ArticleDAO art = new ArticleDAO(connection);
 
 			for (String s : articlesIDs) {
-				int articleID = Integer.parseInt(s);
+				int articleID;
+
+				try {
+					articleID = Integer.parseInt(s);
+				} catch (NumberFormatException e) {
+					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Errore: inserire un numero!");
+					return;
+				}
 
 				try {
 					// retrieves each selected article and checks if its owner is the current user
@@ -124,7 +147,6 @@ public class CreateAuction extends HttpServlet {
 						return;
 					}
 				} catch (SQLException | IOException e) {
-					e.printStackTrace();
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 							"Errore: accesso al database fallito!");
 					return;
@@ -136,7 +158,6 @@ public class CreateAuction extends HttpServlet {
 				try {
 					art.associateToAuction(articleID, auctionID);
 				} catch (SQLException e) {
-					e.printStackTrace();
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 							"Errore: accesso al database fallito!");
 					return;
@@ -148,7 +169,6 @@ public class CreateAuction extends HttpServlet {
 			try {
 				auc.createAuction(auctionID, user.getUserID(), title, price, minIncrease, expiryDate);
 			} catch (SQLException e) {
-				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Errore: accesso al database fallito!");
 				return;
@@ -165,11 +185,7 @@ public class CreateAuction extends HttpServlet {
 		if (request.getSession(false) == null || request.getSession(false).getAttribute("user") == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.html");
 		} else {
-			try {
-				createAuction(request, response);
-			} catch (SQLException | IOException e) {
-				e.printStackTrace();
-			}
+			createAuction(request, response);
 		}
 	}
 
