@@ -1,8 +1,8 @@
 # Progetto TIW - versione HTML pura (A.A. 2022/2023)
 
-**ITA** -Il progetto ha come obbiettivo la creazione di un'applicazione web che rispetti le specifiche fornite dal docente. Questo progetto, insieme alla sua versione RIA, è valido come prova d'esame per il corso **"Tecnologie Informatiche per il Web"** del percorso di laurea in **Ingegneria Informatica** del Politecnico di Milano.
+**ITA** - Il progetto ha come obbiettivo la creazione di un'applicazione web che rispetti le specifiche fornite dal docente. Questo progetto, insieme alla sua versione RIA, è valido come prova d'esame per il corso **"Tecnologie Informatiche per il Web"** del percorso di laurea in **Ingegneria Informatica** del Politecnico di Milano.
 
-**EN** -The aim of the project is the development of a web application that satisfies the given specifications. This project, together with its RIA version, is valid as final exam for the **"Tecnologie Informatiche per il Web"** course of **Computer Science Engineering** at Politecnico di Milano.
+**EN** - The aim of the project is the development of a web application that satisfies the given specifications. This project, together with its RIA version, is valid as final exam for the **"Tecnologie Informatiche per il Web"** course of **Computer Science Engineering** at Politecnico di Milano.
 
 **Teacher**: Piero Fraternali
 **Final mark**: 27/30
